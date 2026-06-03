@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="mr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Thank You — The H.O.L.Y. Shift Method™</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&family=Poppins:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { background: #03170c; color: #fff; font-family: 'Inter', sans-serif; min-height: 100vh; overflow-x: hidden; }
+    :root {
+      --gold: #F4AE00;
+      --gold-light: rgba(244,174,0,0.12);
+      --gold-border: rgba(244,174,0,0.25);
+      --bg-card: rgba(255,255,255,0.04);
+      --text-muted: rgba(255,255,255,0.72);
+      --text-dim: rgba(255,255,255,0.42);
+    }
+    a { text-decoration: none; }
+
+    /* HEADER */
+    #ty-header {
+      background: rgba(3,23,12,0.96);
+      border-bottom: 1px solid var(--gold-border);
+      padding: 16px 5%;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    #ty-header img { height: 48px; }
+    #ty-header .brand-name { font-family: 'Outfit', sans-serif; font-size: 0.95rem; font-weight: 800; color: var(--gold); }
+
+    /* HERO */
+    #ty-hero {
+      text-align: center;
+      padding: 80px 5% 60px;
+      position: relative;
+      overflow: hidden;
+    }
+    #ty-hero::before {
+      content: '';
+      position: absolute;
+      top: -20%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(244,174,0,0.09) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .ty-check {
+      width: 88px; height: 88px;
+      background: linear-gradient(135deg, #F4AE00, #e09c00);
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.2rem;
+      margin-bottom: 28px;
+      box-shadow: 0 0 40px rgba(244,174,0,0.35);
+      animation: checkPop 0.6s ease;
+    }
+    @keyframes checkPop { 0%{transform:scale(0);opacity:0} 70%{transform:scale(1.12)} 100%{transform:scale(1);opacity:1} }
+    #ty-hero h1 { font-family: 'Outfit', sans-serif; font-size: clamp(1.8rem, 5vw, 3rem); font-weight: 900; margin-bottom: 16px; line-height: 1.25; }
+    #ty-hero h1 em { font-style: normal; color: var(--gold); }
+    #ty-hero .ty-sub { font-size: clamp(0.95rem, 2vw, 1.1rem); color: var(--text-muted); max-width: 560px; margin: 0 auto 36px; line-height: 1.75; }
+
+    /* DETAILS BOX */
+    .ty-details {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 12px;
+      margin: 0 auto 48px;
+    }
+    .ty-detail-pill {
+      background: var(--gold-light);
+      border: 1px solid var(--gold-border);
+      border-radius: 30px;
+      padding: 10px 20px;
+      font-family: 'Poppins', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: rgba(255,255,255,0.85);
+      display: flex; align-items: center; gap: 8px;
+    }
+
+    /* VIDEO SECTION */
+    #ty-video {
+      padding: 20px 5% 70px;
+      max-width: 860px;
+      margin: 0 auto;
+    }
+    .ty-video-label {
+      text-align: center;
+      font-family: 'Poppins', sans-serif;
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--gold);
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      margin-bottom: 14px;
+    }
+    .ty-video-title {
+      text-align: center;
+      font-family: 'Outfit', sans-serif;
+      font-size: clamp(1.3rem, 3vw, 2rem);
+      font-weight: 800;
+      margin-bottom: 28px;
+    }
+    .video-embed-box {
+      background: #000;
+      border-radius: 20px;
+      overflow: hidden;
+      border: 2px solid var(--gold-border);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+      aspect-ratio: 16/9;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+    .video-embed-box iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+    .video-placeholder {
+      text-align: center;
+      padding: 40px;
+    }
+    .video-placeholder .vp-icon { font-size: 3.5rem; margin-bottom: 16px; }
+    .video-placeholder p { font-family: 'Poppins', sans-serif; font-size: 0.92rem; color: var(--text-muted); line-height: 1.6; }
+    .video-placeholder strong { color: var(--gold); }
+
+    /* NEXT STEPS */
+    #ty-next {
+      padding: 0 5% 70px;
+      max-width: 860px;
+      margin: 0 auto;
+    }
+    .ty-next-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: clamp(1.3rem, 3vw, 1.8rem);
+      font-weight: 800;
+      margin-bottom: 28px;
+      text-align: center;
+    }
+    .ty-steps { display: flex; flex-direction: column; gap: 14px; }
+    .ty-step {
+      background: var(--bg-card);
+      border: 1px solid var(--gold-border);
+      border-radius: 14px;
+      padding: 22px 24px;
+      display: flex;
+      align-items: center;
+      gap: 18px;
+    }
+    .ty-step-num {
+      width: 38px; height: 38px;
+      background: linear-gradient(135deg, #F4AE00, #e09c00);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Outfit', sans-serif;
+      font-size: 1rem; font-weight: 900;
+      color: #03170c;
+      flex-shrink: 0;
+    }
+    .ty-step-body h4 { font-family: 'Poppins', sans-serif; font-size: 0.95rem; font-weight: 700; color: #fff; margin-bottom: 3px; }
+    .ty-step-body p { font-size: 0.84rem; color: var(--text-muted); line-height: 1.55; }
+
+    /* MANISHA MESSAGE */
+    #ty-message {
+      background: rgba(244,174,0,0.04);
+      border-top: 1px solid var(--gold-border);
+      border-bottom: 1px solid var(--gold-border);
+      padding: 60px 5%;
+      text-align: center;
+    }
+    #ty-message img {
+      width: 90px; height: 90px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid var(--gold);
+      box-shadow: 0 0 24px rgba(244,174,0,0.3);
+      margin: 0 auto 20px;
+    }
+    .ty-msg-quote {
+      font-family: 'Inter', sans-serif;
+      font-size: 1.05rem;
+      color: var(--text-muted);
+      line-height: 1.8;
+      max-width: 580px;
+      margin: 0 auto 16px;
+      font-style: italic;
+    }
+    .ty-msg-name { font-family: 'Poppins', sans-serif; font-size: 0.9rem; font-weight: 700; color: var(--gold); }
+    .ty-msg-role { font-size: 0.78rem; color: var(--text-dim); margin-top: 4px; }
+
+    /* FOOTER */
+    #ty-footer { background: #020e06; border-top: 1px solid rgba(244,174,0,0.15); padding: 30px 5%; text-align: center; }
+    #ty-footer p { font-family: 'Inter', sans-serif; font-size: 0.8rem; color: rgba(255,255,255,0.3); margin-bottom: 8px; }
+    #ty-footer a { color: var(--gold); font-size: 0.8rem; font-family: 'Inter', sans-serif; }
+
+    /* MOBILE */
+    @media (max-width: 600px) {
+      #ty-hero { padding: 60px 5% 44px; }
+      .ty-details { gap: 8px; }
+      .ty-detail-pill { font-size: 0.78rem; padding: 8px 14px; }
+      #ty-video, #ty-next { padding-left: 5%; padding-right: 5%; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header id="ty-header">
+  <img src="logo1.png" alt="The H.O.L.Y. Shift Method™" />
+  <span class="brand-name">The H.O.L.Y. Shift Method™</span>
+</header>
+
+<!-- HERO -->
+<section id="ty-hero">
+  <div class="ty-check">✓</div>
+  <h1>तुम्ही Register केलं!<br /><em>Welcome to Your Healing Journey</em></h1>
+  <p class="ty-sub">Manisha Satpute यांच्यासोबत या transformative session साठी तुमची जागा confirmed आहे. Joining details लवकरच WhatsApp वर पाठवले जातील.</p>
+  <div class="ty-details">
+    <div class="ty-detail-pill">📅 7 June 2026</div>
+    <div class="ty-detail-pill">⏰ 07:20 PM IST</div>
+    <div class="ty-detail-pill">💻 Live Zoom Webinar</div>
+    <div class="ty-detail-pill">✅ Registration Confirmed</div>
+  </div>
+</section>
+
+<!-- VIDEO SECTION -->
+<section id="ty-video">
+  <div class="ty-video-label">Manisha Satpute यांचा</div>
+  <h2 class="ty-video-title">Welcome Message तुमच्यासाठी 💛</h2>
+  <div class="video-embed-box" id="video-box">
+    <!-- PLACEHOLDER: Replace src below with actual YouTube embed URL -->
+    <!-- Example: src="https://www.youtube.com/embed/YOUR_VIDEO_ID" -->
+    <div class="video-placeholder">
+      <div class="vp-icon">🎬</div>
+      <p>Manisha tai चा personal welcome video येथे येईल.<br /><br /><strong>Video link येत आहे</strong> — please share your YouTube/video URL and it will be embedded here.</p>
+    </div>
+  </div>
+</section>
+
+<!-- NEXT STEPS -->
+<section id="ty-next">
+  <h2 class="ty-next-title">पुढे काय करायचं?</h2>
+  <div class="ty-steps">
+    <div class="ty-step">
+      <div class="ty-step-num">1</div>
+      <div class="ty-step-body">
+        <h4>WhatsApp वर Zoom Link येईल</h4>
+        <p>Webinar च्या 24 तास आधी registered number वर Zoom joining link पाठवला जाईल.</p>
+      </div>
+    </div>
+    <div class="ty-step">
+      <div class="ty-step-num">2</div>
+      <div class="ty-step-body">
+        <h4>7 June ला 07:20 PM ला Join व्हा</h4>
+        <p>थोडे आधी Zoom app open करा. शांत जागा निवडा, headphones लावा आणि notebook ठेवा.</p>
+      </div>
+    </div>
+    <div class="ty-step">
+      <div class="ty-step-num">3</div>
+      <div class="ty-step-body">
+        <h4>Bonuses तयार ठेवा</h4>
+        <p>Session नंतर तुमचे Guided Healing Audio, Workbook आणि सर्व bonuses share केले जातील.</p>
+      </div>
+    </div>
+    <div class="ty-step">
+      <div class="ty-step-num">4</div>
+      <div class="ty-step-body">
+        <h4>Open Mind आणि Open Heart घेऊन या</h4>
+        <p>हा session तुमच्यासाठी एक powerful first step ठरू शकतो. फक्त तुमची willingness घेऊन या.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MANISHA MESSAGE -->
+<section id="ty-message">
+  <img src="assets/3O7A2751.JPG-scaled-e1770442292449-796x1024.jpeg" alt="Manisha Satpute" />
+  <p class="ty-msg-quote">"तुम्ही हा पाऊल उचलला — हे खूप महत्त्वाचं आहे. मी तुमच्यासाठी या session मध्ये एक safe, warm आणि genuinely transformative space तयार केलेलं आहे. तुम्ही ready आहात, आणि मी पण."</p>
+  <div class="ty-msg-name">— Manisha Satpute</div>
+  <div class="ty-msg-role">Life Coach &amp; Holistic Healer | The H.O.L.Y. Shift Method™</div>
+</section>
+
+<!-- FOOTER -->
+<footer id="ty-footer">
+  <p>Questions? Contact us: <a href="mailto:official.holyshift@gmail.com">official.holyshift@gmail.com</a> | <a href="https://wa.me/918855977468">WhatsApp: 8855977468</a></p>
+  <p>© 2026 The H.O.L.Y. Shift Method™. All rights reserved.</p>
+</footer>
+
+<script>
+// When video URL is provided, replace placeholder with iframe
+// To activate: set videoUrl to your YouTube embed link
+var videoUrl = ''; // Example: 'https://www.youtube.com/embed/YOUR_ID?autoplay=0&rel=0'
+if (videoUrl) {
+  var box = document.getElementById('video-box');
+  if (box) {
+    var iframe = document.createElement('iframe');
+    iframe.src = videoUrl;
+    iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
+    iframe.allowFullscreen = true;
+    box.innerHTML = '';
+    box.appendChild(iframe);
+  }
+}
+</script>
+
+</body>
+</html>
