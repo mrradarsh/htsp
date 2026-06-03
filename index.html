@@ -1101,7 +1101,58 @@ document.addEventListener('DOMContentLoaded', function() {
 
   if (!form) return;
 
+  var web3formsAccessKey = ''; // Enter your free Web3Forms Access Key here to send emails directly on GitHub Pages!
+
   function handleStaticFallback(name, email, phone, category, preference, message) {
+    // If Web3Forms Access Key is configured, attempt to send email via API
+    if (web3formsAccessKey) {
+      submitBtn.disabled = true;
+      submitBtn.style.opacity = '0.8';
+      spinner.style.display = 'block';
+
+      fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+          access_key: web3formsAccessKey,
+          name: name,
+          email: email,
+          phone: phone,
+          category: category,
+          preference: preference,
+          message: message,
+          subject: "[New Contact Inquiry] " + category + " - " + name
+        })
+      })
+      .then(function(res) {
+        if (!res.ok) throw new Error('API submission failed');
+        return res.json();
+      })
+      .then(function(data) {
+        container.innerHTML = `
+          <div class="success-view">
+            <div class="success-icon">✓</div>
+            <h2>संदेश यशस्वीरित्या पाठवला!</h2>
+            <p class="success-text">
+              धन्यवाद! तुमचा संदेश यशस्वीरित्या पाठवला गेला आहे. Manisha Satpute यांची टीम लवकरच तुमच्याशी संपर्क साधेल.<br /><br />
+              (Thank you! Your message was sent successfully. We will get in touch with you shortly.)
+            </p>
+          </div>
+        `;
+      })
+      .catch(function(err) {
+        console.error('Web3Forms failed, using manual options:', err);
+        showManualOptions(name, email, phone, category, preference, message);
+      });
+    } else {
+      showManualOptions(name, email, phone, category, preference, message);
+    }
+  }
+
+  function showManualOptions(name, email, phone, category, preference, message) {
     var formattedMessage = "*The H.O.L.Y. Shift Method™ - नवीन संपर्क चौकशी (New Inquiry)*\n\n" +
                            "👤 *नाव (Name):* " + name + "\n" +
                            "📧 *ईमेल (Email):* " + email + "\n" +
@@ -1112,22 +1163,43 @@ document.addEventListener('DOMContentLoaded', function() {
                            
     var waUrl = "https://api.whatsapp.com/send?phone=918855977468&text=" + encodeURIComponent(formattedMessage);
     
-    // Open WhatsApp
-    window.open(waUrl, '_blank');
+    var emailSubject = "[New Inquiry] " + category + " - " + name;
+    var emailBody = "Name: " + name + "\n" +
+                    "Email: " + email + "\n" +
+                    "Phone: " + phone + "\n" +
+                    "Category: " + category + "\n" +
+                    "Preference: " + preference + "\n\n" +
+                    "Message:\n" + message;
+                    
+    var mailtoUrl = "mailto:official.holyshift@gmail.com,devilonearth789@gmail.com?subject=" + encodeURIComponent(emailSubject) + "&body=" + encodeURIComponent(emailBody);
     
-    // Show success view with WhatsApp guidelines
+    // Automatically trigger mailto link to open local mail app (like Outlook, Mail app, Mailto link handler)
+    window.location.href = mailtoUrl;
+
+    // Show dual manual option success page
     container.innerHTML = `
       <div class="success-view">
-        <div class="success-icon" style="background: linear-gradient(135deg, #25D366, #128C7E); box-shadow: 0 0 30px rgba(37,211,102,0.3);">💬</div>
-        <h2>WhatsApp द्वारे संपर्क साधा!</h2>
+        <div class="success-icon" style="background: linear-gradient(135deg, #F4AE00, #e09c00); box-shadow: 0 0 30px rgba(244,174,0,0.3);">✉</div>
+        <h2>संदेश पाठवण्याचा पर्याय निवडा</h2>
         <p class="success-text">
-          तुमची चौकशी यशस्वीरित्या तयार झाली आहे. हा ब्लॉग सध्या GitHub Pages वर चालत आहे (जे PHP ला थेट सपोर्ट करत नाही). त्यामुळे आम्ही तुमचा संदेश WhatsApp वर तयार केला आहे.<br /><br />
-          कृपया उघडलेल्या WhatsApp विंडोमध्ये <strong>"Send" (पाठवा)</strong> दाबा जेणेकरून तुमचा संदेश थेट आमच्यापर्यंत पोहोचेल.<br /><br />
-          (Since this site is hosted on GitHub Pages, we have formatted your message on WhatsApp. Please click <strong>Send</strong> in the opened WhatsApp window to reach us directly.)
+          हा ब्लॉग सध्या GitHub Pages वर चालत आहे (जे PHP ला थेट सपोर्ट करत नाही). त्यामुळे संदेश पाठवण्यासाठी खालीलपैकी एका पर्यायाचा वापर करा:<br /><br />
+          (This site is hosted on GitHub Pages, which does not support PHP backend emails. Please use one of the direct options below to send your query:)
         </p>
-        <a href="${waUrl}" target="_blank" class="btn-primary" style="background: linear-gradient(135deg, #25D366, #128C7E); box-shadow: 0 6px 20px rgba(37,211,102,0.3);">पुन्हा WhatsApp उघडा (Open WhatsApp Again)</a>
+        <div style="display: flex; flex-direction: column; gap: 14px; margin-top: 20px;">
+          <a href="${mailtoUrl}" class="btn-primary" style="background: linear-gradient(135deg, #F4AE00, #e09c00); box-shadow: 0 6px 20px rgba(244,174,0,0.25);">
+            ✉ Email द्वारे पाठवा (Send via Email App)
+          </a>
+          <a href="${waUrl}" target="_blank" class="btn-primary" style="background: linear-gradient(135deg, #25D366, #128C7E); box-shadow: 0 6px 20px rgba(37,211,102,0.3);">
+            💬 WhatsApp द्वारे पाठवा (Send via WhatsApp)
+          </a>
+        </div>
       </div>
     `;
+    
+    // Reset submit button state
+    submitBtn.disabled = false;
+    submitBtn.style.opacity = '1';
+    spinner.style.display = 'none';
   }
 
   form.addEventListener('submit', function(e) {
