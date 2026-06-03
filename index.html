@@ -1084,14 +1084,51 @@ document.querySelectorAll('a[href^="#"]').forEach(function(a) {
   });
 });
 
-// Contact Form AJAX Handler
+// Contact Form AJAX Handler & Fallback
 document.addEventListener('DOMContentLoaded', function() {
   var form = document.getElementById('landingContactForm');
   var container = document.getElementById('landingContactContainer');
   var submitBtn = document.getElementById('landingSubmitBtn');
   var spinner = document.getElementById('landingBtnSpinner');
 
+  // Detect GitHub Pages / Static Hosting and rewrite contact.php link to #contact
+  if (window.location.hostname.indexOf('github.io') !== -1) {
+    document.querySelectorAll('a[href="contact.php"]').forEach(function(link) {
+      link.href = '#contact';
+      link.removeAttribute('target');
+    });
+  }
+
   if (!form) return;
+
+  function handleStaticFallback(name, email, phone, category, preference, message) {
+    var formattedMessage = "*The H.O.L.Y. Shift Method™ - नवीन संपर्क चौकशी (New Inquiry)*\n\n" +
+                           "👤 *नाव (Name):* " + name + "\n" +
+                           "📧 *ईमेल (Email):* " + email + "\n" +
+                           "📞 *मोबाईल (Phone):* " + phone + "\n" +
+                           "🌀 *मार्गदर्शन श्रेणी (Category):* " + category + "\n" +
+                           "💬 *पसंतीचे माध्यम (Preference):* " + preference + "\n\n" +
+                           "📝 *संदेश (Message):*\n" + message;
+                           
+    var waUrl = "https://api.whatsapp.com/send?phone=918855977468&text=" + encodeURIComponent(formattedMessage);
+    
+    // Open WhatsApp
+    window.open(waUrl, '_blank');
+    
+    // Show success view with WhatsApp guidelines
+    container.innerHTML = `
+      <div class="success-view">
+        <div class="success-icon" style="background: linear-gradient(135deg, #25D366, #128C7E); box-shadow: 0 0 30px rgba(37,211,102,0.3);">💬</div>
+        <h2>WhatsApp द्वारे संपर्क साधा!</h2>
+        <p class="success-text">
+          तुमची चौकशी यशस्वीरित्या तयार झाली आहे. हा ब्लॉग सध्या GitHub Pages वर चालत आहे (जे PHP ला थेट सपोर्ट करत नाही). त्यामुळे आम्ही तुमचा संदेश WhatsApp वर तयार केला आहे.<br /><br />
+          कृपया उघडलेल्या WhatsApp विंडोमध्ये <strong>"Send" (पाठवा)</strong> दाबा जेणेकरून तुमचा संदेश थेट आमच्यापर्यंत पोहोचेल.<br /><br />
+          (Since this site is hosted on GitHub Pages, we have formatted your message on WhatsApp. Please click <strong>Send</strong> in the opened WhatsApp window to reach us directly.)
+        </p>
+        <a href="${waUrl}" target="_blank" class="btn-primary" style="background: linear-gradient(135deg, #25D366, #128C7E); box-shadow: 0 6px 20px rgba(37,211,102,0.3);">पुन्हा WhatsApp उघडा (Open WhatsApp Again)</a>
+      </div>
+    `;
+  }
 
   form.addEventListener('submit', function(e) {
     e.preventDefault();
@@ -1113,6 +1150,10 @@ document.addEventListener('DOMContentLoaded', function() {
       body: formData
     })
     .then(function(res) {
+      // 405 Method Not Allowed or 404 Not Found on static servers (like GitHub Pages)
+      if (res.status === 405 || res.status === 404) {
+        throw new Error('Static host - PHP not supported');
+      }
       if (!res.ok) throw new Error('Network response was not ok');
       return res.json();
     })
@@ -1147,9 +1188,19 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     })
     .catch(function(err) {
-      console.error('Error submitting contact form:', err);
-      // Fallback to standard submit
-      form.submit();
+      console.warn('Redirecting to WhatsApp fallback due to static hosting:', err);
+      
+      // Extract form values for WhatsApp pre-fill
+      var nameVal = form.querySelector('[name="name"]').value;
+      var emailVal = form.querySelector('[name="email"]').value;
+      var phoneVal = form.querySelector('[name="phone"]').value;
+      var catVal = form.querySelector('[name="category"]:checked')?.value || '🌀 overthinking';
+      // Clean up emoji prefix for text message readability
+      catVal = catVal.replace(/[\uE000-\uF8FF]|\uD83C[\uDC00-\uDFFF]|\uD83D[\uDC00-\uDFFF]|[\u2011-\u26FF]|\uD83E[\uDD10-\uDDFF]/g, "").trim();
+      var prefVal = form.querySelector('[name="preference"]:checked')?.value || 'WhatsApp';
+      var msgVal = form.querySelector('[name="message"]').value;
+      
+      handleStaticFallback(nameVal, emailVal, phoneVal, catVal, prefVal, msgVal);
     });
   });
 });
